@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidely | Home</title>
+    <link rel="icon" type="image/png" href="favi.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles for animations and theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .feature-card, .price-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .feature-card:hover, .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        /* Initial state for scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        /* Final state for scroll animations */
+        .fade-in-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered animations for feature cards */
+        .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .feature-card:nth-child(4) { transition-delay: 0.4s; }
+        .feature-card:nth-child(5) { transition-delay: 0.5s; }
+        .feature-card:nth-child(6) { transition-delay: 0.6s; }
+        .feature-card:nth-child(7) { transition-delay: 0.7s; }
+        .feature-card:nth-child(8) { transition-delay: 0.8s; }
+        .feature-card:nth-child(9) { transition-delay: 0.9s; }
+    </style>
+    <script>
+        // Encapsulate theme logic to avoid global scope issues
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            // Function to apply the correct theme and icon state
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+            };
+
+            // Function to toggle theme
+            const toggleTheme = () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const newTheme = isDark ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            };
+
+            // Set initial theme based on localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+
+            // Add click event listener
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', toggleTheme);
+            }
+        });
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                <img src="icon.png" alt="Description of the image" style="width: 200px; height: 80px;">
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="#features" class="hidden md:block text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Features</a>
+                <a href="#pricing" class="hidden md:block text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Pricing</a>
+                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 p-2 rounded-full transition focus:outline-none">
+                    <i id="theme-toggle-moon" class="fas fa-moon"></i>
+                    <i id="theme-toggle-sun" class="fas fa-sun hidden"></i>
+                </button>
+                <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg transition">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight mb-4 fade-in">
+                    Supercharge your studies with <span class="text-indigo-600 dark:text-indigo-400">Guidely</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 fade-in" style="transition-delay: 0.2s;">
+                     Artificial Intelligence to the fullest capabilities whilst upholding academic integrity. Your one stop-shop AI Assistant for education.
+                </p>
+                <div class="fade-in" style="transition-delay: 0.4s;">
+                    <a href="#features" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
+                        Why Guidely?
+                    </a>
+                </div>
+            </div>
+        </section>
+<section id="about" class="py-16 bg-gray-100 dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">About <span class="text-indigo-600 dark:text-indigo-400">Guidely</span></h2>
+        <p class="text-lg text-center text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-12">
+            Guidely is a powerful AI agent built for students, teachers, and anyone who wants to learn subjects and skills quickly, simply and hassle free using innovative technology.
+        </p>
+
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="text-xl italic text-gray-700 dark:text-gray-300 mb-4">
+                "Give a Man a Fish, and You Feed Him for a Day. Teach a Man To Fish, and You Feed Him for a Lifetime."
+            </p>
+        </div>
+
+        <p class="text-xl bold text-center text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-12">
+        <strong>Why get a single fish when you can learn how to catch multiple fish?</b>
+        </p>
+    </div>
+</section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white dark:bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Why Guidely?</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">A list of some of our prominent features.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-red-500 mb-4"><i class="fa-solid fa-bug-slash"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Non exploitative</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Other AI providers may expose you to malware, uncensored/exploitative content and untrusted sources.</p>
+                    </div>
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-blue-500 mb-4"><i class="fa-solid fa-school-lock"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Tailored for education</h3>
+                        <p class="text-gray-600 dark:text-gray-400">The Guidely backend was tailored specficially for schools and students in mind.</p>
+                    </div>
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-green-500 mb-4"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Academic integrity</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely upholds academic integrity to the fullest capabilities by using our lock systems.</p>
+                    </div>
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-gray-500 mb-4"><i class="fa-solid fa-quote-left"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Transparency</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely is built on transparency and trust.</p>
+                    </div>
+                    <!-- Feature 5: Summarizer -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-yellow-500 mb-4"><i class="fa-solid fa-bolt"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Lightning Fast Safe Communication</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely transfers data at lightning speed whilst keeping you safe.</p>
+                    </div>
+                    <!-- Feature 6: Presentation Maker -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-pink-500 mb-4"><i class="fa-solid fa-lock"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Encryption</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely utilizes secure protocols to keep you and your data safe and secure.</p>
+                    </div>
+                    <!-- Feature 7: Research Assistant -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-teal-500 mb-4"><i class="fas fa-search"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Ease of use</h3>
+                        <p class="text-gray-600 dark:text-gray-400">No confusing layout, no model tinkering Guidely gives you the best performance possible.</p>
+                    </div>
+                    <!-- NEW Feature 8: Flashcard Generator -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-orange-500 mb-4"><i class="fa-solid fa-microchip"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Reliable AI Technology</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely utilizes the most reliable ai technology for speed, efficiency and logic.</p>
+                    </div>
+                    <!-- NEW Feature 9: Citation Assistant -->
+                    <div class="feature-card bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg fade-in">
+                        <div class="text-3xl text-cyan-500 mb-4"><i class="fa-solid fa-clone"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Smart Data</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Guidely uses the most up to date information available.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Simple, Transparent Pricing</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Choose the plan that's right for your journey.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row justify-center items-center lg:items-stretch gap-8">
+                    
+                    <!-- Basic Plan -->
+                    <div class="price-card w-full max-w-sm bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-gray-300 dark:border-gray-600 fade-in" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold text-gray-500 dark:text-gray-400 mb-2">Basic</h3>
+                        <p class="text-4xl font-bold text-gray-900 dark:text-white mb-1">$<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Coming soon...</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-300 mb-8">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                        </ul>
+                        <a href="#" class="w-full text-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-3 px-6 rounded-lg transition">UNAVAILABLE</a>
+                    </div>
+
+                    <!-- Professional Plan -->
+                    <div class="price-card w-full max-w-sm bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl border-t-4 border-indigo-600 dark:border-indigo-400 transform lg:scale-105 fade-in" style="transition-delay: 0.4s;">
+                        <h3 class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Professional</h3>
+                        <p class="text-4xl font-bold text-gray-900 dark:text-white mb-1">$<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Coming soon...</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-300 mb-8">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Coming soon.</li>
+                        </ul>
+                        <a href="#" class="w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition">UNAVAILABLE</a>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="price-card w-full max-w-sm bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-gray-300 dark:border-gray-600 fade-in" style="transition-delay: 0.6s;">
+                        <h3 class="text-xl font-semibold text-gray-500 dark:text-gray-400 mb-2">Enterprise</h3>
+                        <p class="text-4xl font-bold text-gray-900 dark:text-white mb-1">Contact Us</p>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">For institutions & teams.</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-300 mb-8">
+                             <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Custom integrations</li>
+                             <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Dedicated Panels</li>
+                             <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Discounts</li>
+                        </ul>
+                        <a href="https://guidely.live/sales" class="w-full text-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-3 px-6 rounded-lg transition">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-600 dark:text-gray-400">
+            <p>&copy; guidely.live</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-visible');
+                    observer.unobserve(entry.target); // Optional: stop observing after animation
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>

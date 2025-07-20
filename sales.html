@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidely | Sales</title>
+    <link rel="icon" type="image/png" href="favi.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom CSS for toast notification */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast {
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeInOut 3s forwards; /* Fade in and out animation */
+            min-width: 220px; /* Slightly wider toast */
+            text-align: center;
+            font-weight: 600; /* Make toast text bolder */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Define the fade in and out animation */
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* Gradient background for the main card */
+        .gradient-bg {
+            background: linear-gradient(135deg, #fFf4f6 0%, #FFe7ff 100%);
+        }
+
+        /* Button styles */
+        .btn-primary {
+            @apply bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1;
+        }
+        .btn-secondary {
+            @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1;
+            @apply dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center p-4 relative">
+
+    <div id="darkModeToggle" class="toggle-switch">
+        <div class="toggle-switch-inner"></div>
+    </div>
+
+    <div class="gradient-bg rounded-2xl shadow-2xl p-8 md:p-12 max-w-2xl w-full text-center border border-gray-200 dark:border-gray-800">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 flex items-center justify-center">
+            <i class="fa-solid fa-envelope mr-4 text-black-600 dark:text-indigo-400"></i> Contact Sales
+        </h1>
+        <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+            Have questions about our services or need a custom solution? Reach out to our sales team, we're here to help!
+        </p>
+
+        <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-inner border border-gray-200 dark:border-gray-700">
+            <p id="email-display" class="text-2xl md:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-4 select-all">
+                sales@guidely.live
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="copyEmailBtn" class="btn-primary flex items-center justify-center">
+                    <i class="fas fa-copy mr-2"></i> Copy Email Address
+                </button>
+            </div>
+        </div>
+
+        <p class="text-md text-gray-600 dark:text-gray-400">
+            You can also visit our <a href="https://guidely.live" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">homepage</a> for more information.
+        </p>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        const copyEmailBtn = document.getElementById('copyEmailBtn');
+        const emailDisplay = document.getElementById('email-display');
+        const toastContainer = document.getElementById('toastContainer');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const htmlElement = document.documentElement; // Get the root html element
+
+        // Function to show a temporary toast message
+        function showMessage(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.classList.add('toast');
+
+            // Apply theme specific styles based on current mode
+            if (htmlElement.classList.contains('dark')) {
+                // Dark mode styles for toast
+                if (type === 'success') {
+                    toast.classList.add('bg-gray-700', 'text-white');
+                } else if (type === 'error') {
+                    toast.classList.add('bg-red-600', 'text-white');
+                }
+            } else {
+                // Light mode styles for toast
+                if (type === 'success') {
+                    toast.classList.add('bg-gray-800', 'text-white');
+                } else if (type === 'error') {
+                    toast.classList.add('bg-red-500', 'text-white');
+                }
+            }
+
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Add click event listener to the copy button
+        copyEmailBtn.addEventListener('click', () => {
+            const textarea = document.createElement('textarea');
+            textarea.value = emailDisplay.textContent.trim();
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showMessage('Email copied!', 'success');
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                showMessage('Failed to copy email.', 'error');
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        });
+
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            darkModeToggle.classList.add('active');
+        }
+    </script>
+</body>
+</html>
