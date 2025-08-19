@@ -11,7 +11,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
         /* Custom CSS for toast notification */
         .toast-container {
@@ -49,7 +48,7 @@
 
         /* Gradient background for the main card */
         .gradient-bg {
-            background: linear-gradient(135deg, #fFf4f6 0%, #FFe7ff 100%);
+            background: linear-gradient(135deg, #fff4f6 0%, #ffe7ff 100%);
         }
 
         /* Button styles */
@@ -58,26 +57,21 @@
         }
         .btn-secondary {
             @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1;
-            @apply dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200;
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center p-4 relative">
+<body class="bg-gray-50 text-gray-900 min-h-screen flex items-center justify-center p-4 relative">
 
-    <div id="darkModeToggle" class="toggle-switch">
-        <div class="toggle-switch-inner"></div>
-    </div>
-
-    <div class="gradient-bg rounded-2xl shadow-2xl p-8 md:p-12 max-w-2xl w-full text-center border border-gray-200 dark:border-gray-800">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 flex items-center justify-center">
-            <i class="fa-solid fa-envelope mr-4 text-black-600 dark:text-indigo-400"></i> Contact Sales
+    <div class="gradient-bg rounded-2xl shadow-2xl p-8 md:p-12 max-w-2xl w-full text-center border border-gray-200">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 flex items-center justify-center">
+            <i class="fa-solid fa-envelope mr-4 text-indigo-600"></i> Contact Sales
         </h1>
-        <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+        <p class="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
             Have questions about our services or need a custom solution? Reach out to our sales team, we're here to help!
         </p>
 
-        <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-inner border border-gray-200 dark:border-gray-700">
-            <p id="email-display" class="text-2xl md:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-4 select-all">
+        <div class="mb-8 p-4 bg-white rounded-lg shadow-inner border border-gray-200">
+            <p id="email-display" class="text-2xl md:text-3xl font-bold text-indigo-600 mb-4 select-all">
                 sales@guidely.live
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -87,8 +81,8 @@
             </div>
         </div>
 
-        <p class="text-md text-gray-600 dark:text-gray-400">
-            You can also visit our <a href="https://guidely.live" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">homepage</a> for more information.
+        <p class="text-md text-gray-600">
+            You can also visit our <a href="https://guidely.live" class="text-indigo-600 hover:underline font-semibold">homepage</a> for more information.
         </p>
     </div>
 
@@ -98,8 +92,6 @@
         const copyEmailBtn = document.getElementById('copyEmailBtn');
         const emailDisplay = document.getElementById('email-display');
         const toastContainer = document.getElementById('toastContainer');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const htmlElement = document.documentElement; // Get the root html element
 
         // Function to show a temporary toast message
         function showMessage(message, type = 'success') {
@@ -107,21 +99,11 @@
             toast.textContent = message;
             toast.classList.add('toast');
 
-            // Apply theme specific styles based on current mode
-            if (htmlElement.classList.contains('dark')) {
-                // Dark mode styles for toast
-                if (type === 'success') {
-                    toast.classList.add('bg-gray-700', 'text-white');
-                } else if (type === 'error') {
-                    toast.classList.add('bg-red-600', 'text-white');
-                }
-            } else {
-                // Light mode styles for toast
-                if (type === 'success') {
-                    toast.classList.add('bg-gray-800', 'text-white');
-                } else if (type === 'error') {
-                    toast.classList.add('bg-red-500', 'text-white');
-                }
+            // Light mode styles for toast
+            if (type === 'success') {
+                toast.classList.add('bg-gray-800', 'text-white');
+            } else if (type === 'error') {
+                toast.classList.add('bg-red-500', 'text-white');
             }
 
             toastContainer.appendChild(toast);
@@ -147,13 +129,6 @@
                 document.body.removeChild(textarea);
             }
         });
-
-
-        // Check for saved theme preference
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlElement.classList.add('dark');
-            darkModeToggle.classList.add('active');
-        }
     </script>
 </body>
 </html>
